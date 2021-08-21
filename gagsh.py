@@ -13,6 +13,8 @@ bot = telebot.TeleBot('1948099553:AAHTA-XpYGDIfoywY2ANjOGM7cKSSw0jUxE')
 keyboard1 = telebot.types.ReplyKeyboardMarkup(True)
 
 keyboard1.row('Начать игру', 'Об игре','/restart','Правила')
+keyboard1.row('A', 'B','C','D','Q')
+
 
 @bot.message_handler(commands=['restart'])
 def tytyty(message):
