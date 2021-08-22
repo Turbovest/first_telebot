@@ -4,16 +4,20 @@ run1=25 #сколько проехал разбiйнiк
 jajda=0 #склько жажды у разбойника,если жажда будет равна 8 ,то ты умрешь!
 energy=8 #энергия верблюда ,если будет 0 ты умрешь
 a=1
+b=1
 import telebot
-
-
+import random
+import time
 
 bot = telebot.TeleBot('1948099553:AAHTA-XpYGDIfoywY2ANjOGM7cKSSw0jUxE')
 
 keyboard1 = telebot.types.ReplyKeyboardMarkup(True)
+keyboard2 = telebot.types.ReplyKeyboardMarkup(True,True)
+
 
 keyboard1.row('Начать игру', 'Об игре','/restart','Правила')
-keyboard1.row('A', 'B','C','D','Q')
+keyboard1.row('A','B','C','D','Q')
+keyboard2.row('Начать дуэль!','Сдатьса')
 
 
 @bot.message_handler(commands=['restart'])
@@ -31,7 +35,7 @@ def tytyty(message):
 @bot.message_handler(commands=['start'])
 def start_message(message):
     bot.send_message(message.chat.id, 'Привет, ты написал мне /start', reply_markup=keyboard1)
-    bot.send_photo(message.chat.id, open('picfull2_5a9a613f0229c.jpg', 'rb'))
+    bot.send_photo(message.chat.id, open('/Users/apple/Documents/picfull2_5a9a613f0229c.jpg', 'rb'))
     bot.send_message(message.chat.id, 'Добро пожаловать в игру -на верблюдах! Вы украли верблюда, чтобы пробраться через великую пустыню Моби(169 миль). Туземцы хотят вернуть своего верблюда и гонятся за тобой! Выживите убегаю по пустыне и опередите туземцев.'
                                           'Скорость туземцев равна 15 миль, а разбойника равна 16 милям в час,энергия верблюда равна 8,жажда разбойника в начале игры=0,но потом она увеличивается и если она достигнет 8 то ты труп,и да у тебя есть фора равная 25 милям!Вообщем удачи')
     bot.send_message(message.chat.id,'Нажмите Начать Игру!')
@@ -54,6 +58,7 @@ def send_text(message):
     global run2
     global energy
     global a
+    global b
 
     if message.text.lower() == 'начать игру':
         bot.send_message(message.chat.id,"A)Пейте из фляги")
@@ -123,15 +128,33 @@ def send_text(message):
                 bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAECyH1hIDYusgngP0fBp63R4vGBf5OZMAAC7wUAApb6EgXN5022CloLmiAE')
         if message.text.lower()  == 'd':
             bot.send_message(message.chat.id,f"Энергия верблюда равна {energy}.Твоя жажда равна {jajda}.Ты проехал всего {run1}. Кстати если жажда будет равна 8 то ты умрешь ,Туземцы от вас на расстояние {run1-run2-5} из-за того что ты остановился что бы проверить состояние, туземцы проехали еще 5 миль" )
-            run2+=5;
+            run2+=5
             if run2 >= run1:
-                bot.send_sticker(message.chat.id,'CAACAgIAAxkBAAECyQthINoHhu55a4MOmaylz5URplqWJgAC7gQAAs7Y6Av7yana3PIwiSAE')
-                bot.send_message(message.chat.id, "Тебя догнали туземцы,и сейчас тебя съедят!Так что ты проиграл!!!")
-                a=0
-                bot.send_message(message.chat.id,'Нажмите что-бы начать с начала:')
-                bot.send_message(message.chat.id,'/restart')
-            if a==1:
-                vopros(message)
+                bot.send_sticker(message.chat.id,'CAACAgIAAxkBAAECyfBhIihFCQvJGipsQpAWiQk2lif58gACzQQAAs7Y6Auz8ca_WShKkSAE')
+                bot.send_message(message.chat.id, "Тебя догнали туземцы,но может есть еще шанс?",reply_markup=keyboard2)
+        if message.text.lower() == 'начать дуэль!':
+            b=0
+            bot.send_sticker(message.chat.id,'CAACAgIAAxkBAAECygphIir_0dLQZvGaYzj2uxa3wY9mggACKAQAAj-VzApCEo_PLa7NvCAE')
+            bot.send_message(message.chat.id,'Дуэль началась,теперь все зависит от твоего везения...')
+            my_number = random.randrange(0,8)
+            time.sleep(5)
+            if my_number == 1:
+                bot.send_message(message.chat.id,'*О,а ты везунчик,тебе повезло!Ты сумел выиграть дуэль!Теперь тебе ничего не угрожает!*',parse_mode= "Markdown")
+                a = 0
+                bot.send_message(message.chat.id, 'Нажмите что-бы начать с начала:')
+                bot.send_message(message.chat.id, '/restart')
+            else:
+                bot.send_message(message.chat.id,'*Вот ты уже достал свой пистолет,но вдруг раздался выстрел и  ты труп!*',parse_mode= "Markdown")
+                bot.send_sticker(message.chat.id,'CAACAgIAAxkBAAECyfZhIij4bPCi__Ve-hU2MxCe9mH1YAAC_wAD5bkIGvo7MX3nUJ5VIAQ')
+                a = 0
+                bot.send_message(message.chat.id, 'Нажмите что-бы начать с начала:')
+                bot.send_message(message.chat.id, '/restart')
+
+        if message.text.lower() == 'сдатьса' and b==1:
+            bot.send_message(message.chat.id, 'Ты сдался,а значит нв всю жизнь будешь рабом')
+            a = 0
+            bot.send_message(message.chat.id, 'Нажмите что-бы начать с начала:')
+            bot.send_message(message.chat.id, '/restart')
 
 
         if message.text.lower() == 'c':
@@ -143,11 +166,33 @@ def send_text(message):
             run2+=5
 
             if run2>=run1:
-                bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAECyQthINoHhu55a4MOmaylz5URplqWJgAC7gQAAs7Y6Av7yana3PIwiSAE')
-                bot.send_message(message.chat.id,"Тебя догнали туземцы,и сейчас тебя съедят!Так что ты проиграл!!!")
-                a=0
+                bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAECyfBhIihFCQvJGipsQpAWiQk2lif58gACzQQAAs7Y6Auz8ca_WShKkSAE')
+                bot.send_message(message.chat.id, "Тебя догнали туземцы,но может есть еще шанс?",reply_markup=keyboard2)
+            if message.text.lower() == 'начать дуэль!':
+                b = 0
+                bot.send_sticker(message.chat.id,
+                                 'CAACAgIAAxkBAAECygphIir_0dLQZvGaYzj2uxa3wY9mggACKAQAAj-VzApCEo_PLa7NvCAE')
+                bot.send_message(message.chat.id, 'Дуэль началась,теперь все зависит от твоего везения...')
+                my_number = random.randrange(0, 8)
+                time.sleep(5)
+                if my_number == 1:
+                    bot.send_message(message.chat.id,'*О,а ты везунчик,тебе повезло!Ты сумел выиграть дуэль!Теперь тебе ничего не угрожает!*',parse_mode="Markdown")
+                    a = 0
+                    bot.send_message(message.chat.id, 'Нажмите что-бы начать с начала:')
+                    bot.send_message(message.chat.id, '/restart')
+                else:
+                    bot.send_message(message.chat.id,'*Вот ты уже достал свой пистолет,но вдруг раздался выстрел и  ты труп!*',parse_mode="Markdown")
+                    bot.send_sticker(message.chat.id,'CAACAgIAAxkBAAECyfZhIij4bPCi__Ve-hU2MxCe9mH1YAAC_wAD5bkIGvo7MX3nUJ5VIAQ')
+                    a = 0
+                    bot.send_message(message.chat.id, 'Нажмите что-бы начать с начала:')
+                    bot.send_message(message.chat.id, '/restart')
+
+            if message.text.lower() == 'сдатьса' and b == 1:
+                bot.send_message(message.chat.id, 'Ты сдался,а значит нв всю жизнь будешь рабом')
+                a = 0
                 bot.send_message(message.chat.id, 'Нажмите что-бы начать с начала:')
                 bot.send_message(message.chat.id, '/restart')
+
             if a==1:
                 vopros(message)
         if message.text.lower() =='q':
@@ -157,3 +202,4 @@ def send_text(message):
             bot.send_message(message.chat.id, '/restart')
 
 bot.polling()
+
