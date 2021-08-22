@@ -129,6 +129,11 @@ def send_text(message):
         if message.text.lower()  == 'd':
             bot.send_message(message.chat.id,f"Энергия верблюда равна {energy}.Твоя жажда равна {jajda}.Ты проехал всего {run1}. Кстати если жажда будет равна 8 то ты умрешь ,Туземцы от вас на расстояние {run1-run2-5} из-за того что ты остановился что бы проверить состояние, туземцы проехали еще 5 миль" )
             run2+=5
+            if run2 < run1:
+                vopros(message)
+                
+                
+            
             if run2 >= run1:
                 bot.send_sticker(message.chat.id,'CAACAgIAAxkBAAECyfBhIihFCQvJGipsQpAWiQk2lif58gACzQQAAs7Y6Auz8ca_WShKkSAE')
                 bot.send_message(message.chat.id, "Тебя догнали туземцы,но может есть еще шанс?",reply_markup=keyboard2)
