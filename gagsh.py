@@ -34,7 +34,7 @@ def tytyty(message):
 @bot.message_handler(commands=['start'])
 def start_message(message):
     bot.send_message(message.chat.id, 'Привет, ты написал мне /start', reply_markup=keyboard1)
-    bot.send_photo(message.chat.id, open('/Users/apple/Downloads/1кjpg.jpg', 'rb'))
+ 
     bot.send_message(message.chat.id, 'Добро пожаловать в игру -на верблюдах! Вы украли верблюда, чтобы пробраться через великую пустыню Моби(169 миль). Туземцы хотят вернуть своего верблюда и гонятся за тобой! Выживите убегаю по пустыне и опередите туземцев.'
                                           'Скорость туземцев равна 15 миль, а разбойника равна 16 милям в час,энергия верблюда равна 8,жажда разбойника в начале игры=0,но потом она увеличивается и если она достигнет 8 то ты труп,и да у тебя есть фора равная 25 милям!Вообщем удачи')
     bot.send_message(message.chat.id,'Нажмите Начать Игру!')
