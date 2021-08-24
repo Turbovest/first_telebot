@@ -8,7 +8,7 @@ import telebot
 import random
 import time
 
-bot = telebot.TeleBot('1932260026:AAFH7x2nMEFNxvkv6w92VzrBuo_FT4r3qaA')
+bot = telebot.TeleBot('1932260026:AAF-3f3ZoA2lNVBVRxKYMsvm3xguBcXRMdg')
 
 keyboard1 = telebot.types.ReplyKeyboardMarkup(True)
 keyboard2 = telebot.types.ReplyKeyboardMarkup(True,True)
